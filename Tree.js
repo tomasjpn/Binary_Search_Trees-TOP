@@ -106,11 +106,56 @@ export default class Tree{
     }
 
 
+    // Sucht anhand des Wertes, den entsprechenden Knoten
+    find(value){
+      let node = this.root; 
+      let input = value;
+
+
+      const findPos = (node, value) =>{
+        if (node === null) return null; // Base-Case: Wenn Node null => return null
+        if (value === node.data) return node; // Wenn der Knoten gefunden wurde -> return 
+
+        if (value < node.data){ 
+          return findPos(node.left, value); // Durchläuft rekursiv den linken Subtree
+        } else if (value > node.data){
+          return findPos(node.right, value); // Durchläuft rekursiv den rechten Subtree
+        }
+      }
+
+      return findPos(node, input);
+    }
+
+    // Breitensuche (breadth-first level order)
+    levelOrder(callback){
+
+      let node = this.root; // Anfangspunkt: Wurzel wird als Node festgelegt
+      if (node === null) return; // Base-Case: Wenn Node null -> aufhören
+      
+      let queue = []; // Qeue um die Zwischenwerte zu speichern
+      let result = [];
+
+      queue.push(node); // Anfangswert: Wurzel wird in die Qeue gesetzt
+
+      while (queue.length > 0){ // Solange die Queue nicht leer ist, bleibt die Ausführung aktiv
+        node = queue.shift(); // Node = Erster Wert in der Queue, der ebenfalls zu entfernen ist || Hier passiert quasi auch die Traversierung
+
+        if (callback){ // Wenn eine Callback vorhanden ist, wird der ausgeführt
+          callback(node); 
+        } else{ // ansonsten wird ein Array mit den Werten ausgegegeben
+          result.push(node.data)
+        }
+
+        // Die Queue wird mit jeweils den Childnodes des aktuellen Nodes gefühlt
+        if (node.left !== null){
+          queue.push(node.left)
+        }
+        if (node.right !== null){
+          queue.push(node.right)
+        }
+      }
+
+      return callback ? null : result; // Wenn es einen Callback gab, wird null returned, ansonsten das ResultArr
+    }
+
 }
-
-const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const tree = new Tree(arr);
-tree.deleteItem(3);
-tree.deleteItem(4);
-
-tree.printTree();

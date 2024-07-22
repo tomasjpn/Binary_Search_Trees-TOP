@@ -10,7 +10,9 @@ tree.deleteItem(4);
 console.log(tree.find(324));
 tree.printTree();
 
-const result = tree.levelOrder((node)=>{
-    console.log(node);
-});
-console.log(result);
+//const result = tree.levelOrder((node)=>{
+    //console.log(node);
+//});
+//console.log(result);
+
+console.log(tree.postOrder());

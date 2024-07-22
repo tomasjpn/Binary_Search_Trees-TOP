@@ -158,4 +158,65 @@ export default class Tree{
       return callback ? null : result; // Wenn es einen Callback gab, wird null returned, ansonsten das ResultArr
     }
 
+    // InOrder Traversierung
+    inOrder(callback){
+      let resultArr = []; 
+
+      const traverse = (node) => { // Traversierung durch Rekursion
+        if (node === null) return; // Base-Case: wenn am untersten Ende angekommen
+
+        traverse(node.left); // Zuerst den linken Teilbaum
+        if (callback){ // Ausgeben des Wertes
+          callback(node);
+        } else{
+          resultArr.push(node.data);
+        }
+        traverse(node.right); // Rechten Teilbaum
+      }
+
+      traverse(this.root);
+
+      return callback ? null : resultArr;
+      
+    }
+
+    // PreOrder Traversierung
+    preOrder(callback){
+      let resultArr = [];
+
+      const traverse = (node) => {
+        if (node === null) return;
+        
+        if (callback){ // Wert wird direkt augegeben
+          callback(node);
+        } else {
+          resultArr.push(node.data);
+        }
+
+        traverse(node.left); // Linken Teilbaum
+        traverse(node.right); // Rechten Teilbaum
+      }
+      traverse(this.root);
+      return callback ? null : resultArr;
+    }
+
+    //PostOrder Traversierung
+    postOrder(callback){
+      let resultArr = [];
+
+      const traverse = (node) =>{
+        if (node === null) return;
+
+        traverse(node.left);
+        traverse(node.right);
+
+        if (callback){
+          callback(node);
+        } else {
+          resultArr.push(node.data);
+        }
+      }
+      traverse(this.root);
+      return callback ? null : resultArr;
+    }
 }

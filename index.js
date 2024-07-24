@@ -7,12 +7,12 @@ let tree = new Tree(arr);
 tree.deleteItem(3);
 tree.deleteItem(4);
 
-console.log(tree.find(324));
+
 tree.printTree();
 
-//const result = tree.levelOrder((node)=>{
-    //console.log(node);
-//});
-//console.log(result);
+const node = tree.find(8);
+//console.log(node);
 
-console.log(tree.postOrder());
+//console.log(tree.depth(node));
+
+tree.isBalanced();

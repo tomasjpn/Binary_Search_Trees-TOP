@@ -219,4 +219,51 @@ export default class Tree{
       traverse(this.root);
       return callback ? null : resultArr;
     }
+
+    // Berechnet die Höhe eines Knotens
+    height(node){
+      // Base-Case: return -1 -> Da sonst die Blätter = 1, aber sollen ja 0 sein
+    if (node === null) return -1;
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    // Die Höhe eines Knotens wird durch den längsten Pfad zu einem Blattknoten bestimmt
+    return 1 + Math.max(leftHeight, rightHeight); // +1 -> um den aktuellen Knoten miteinzubeschließen und Math.max -> den größten Teilbaum zu finden
+    }
+
+    // Berechnet die Tiefe eines Knotens
+    depth(node){
+      if (node === null) return 0;
+      
+      const leftHeight = this.depth(node.left);
+      const rightHeight = this.depth(node.right);
+
+      return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    isBalanced(){
+      let node = this.root;
+
+      const traverse = (node) =>{
+        if (node === null) return { height: -1, balanced: true }; // Leerer Knoten hat die Höhe -1 = balanciert
+
+        const left = traverse(node.left); // Objekt left
+        const right = traverse(node.right); // Objekt right
+
+        const height = 1 + Math.max(left.height, right.height); // Höhe des aktuellen Knotens berechnen -> Diese Methode zählt die Höhe von diesem Knoten bis zum tiefsten Blattknoten
+
+        // Ein Knoten ist balanciert, wenn beide Teilbäume balanciert sind und die Differenz der Höhen der Teilbäume nicht mehr als 1 beträgt.
+        const balanced = left.balanced && right.balanced && Math.abs(left.height - right.height) <= 1; 
+
+        return { height, balanced };
+      }
+
+      const result = traverse(node);
+      if (result.balanced){
+        console.log("balanced");
+      } else{
+        console.log("unbalanced");
+      }
+      return result.balanced;
+    }
 }

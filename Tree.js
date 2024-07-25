@@ -38,6 +38,7 @@ export default class Tree{
           prettyPrint(this.root)
     }
 
+    // Fügt einen neuen Eintrag in den Baum
     insert(value){
 
       let updatedTree = this.root;
@@ -47,7 +48,6 @@ export default class Tree{
         return;
       }
 
-      // Fügt einen neuen Eintrag in den Baum
       while (true){
         if (value < updatedTree.data){ // Einfügen in den linken Zweig
           if (updatedTree.left === null){ // Wenn der Zweig = null -> Ende des Zweig erreicht
@@ -241,6 +241,7 @@ export default class Tree{
       return 1 + Math.max(leftHeight, rightHeight);
     }
 
+    // Überprüft, ob der Baum balanciert (jeweils rechter sowie linker Teilbaum um max 1 unterscheiden) ist
     isBalanced(){
       let node = this.root;
 
@@ -265,5 +266,11 @@ export default class Tree{
         console.log("unbalanced");
       }
       return result.balanced;
+    }
+
+    // Balanciert den Binary Tree wieder
+    rebalance(){
+      let inOrder = this.inOrder(); // sortiert nach Reihnfolge
+      this.root = this.buildTree(inOrder); // Der Baum auf die neue, balancierte Struktur aktualisiert
     }
 }

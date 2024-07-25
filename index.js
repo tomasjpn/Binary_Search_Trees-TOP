@@ -15,4 +15,6 @@ const node = tree.find(8);
 
 //console.log(tree.depth(node));
 
-tree.isBalanced();
+tree.rebalance();
+
+tree.printTree();
